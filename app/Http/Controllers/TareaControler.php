@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TareaRequest;
 use App\Models\Tarea;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,8 +16,8 @@ class TareaControler extends Controller
      */
     public function index()
     {
-        $tareas=Tarea::orderByDesc('id')->get();
-        return view('tarea.index',compact('tareas'));
+
+        return view('tarea.index');
     }
 
     /**
@@ -35,16 +36,10 @@ class TareaControler extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TareaRequest $request)
     {
-        $datos = $request->validate(
-            [
-                'nombre' => 'required|max:60',
-                'descripcion' => 'nullable|max:255',
-                'finalizada' => 'nullable|numeric|min:0|max:1',
-                'urgencia' => 'required|numeric|min:0|max:2',
-                'fecha_limite' => 'required|date_format:Y-m-d\TH:i'
-            ]
+        $datos = $request->validated(
+
 
         );
         //dd($datos); bugear los datos
@@ -61,7 +56,7 @@ class TareaControler extends Controller
      */
     public function show(Tarea $tarea)
     {
-        //
+       return view('tarea.show',compact('tarea'));
     }
 
     /**
@@ -72,7 +67,7 @@ class TareaControler extends Controller
      */
     public function edit(Tarea $tarea)
     {
-        //
+        return view('tarea.edit',compact('tarea'));
     }
 
     /**
@@ -82,9 +77,11 @@ class TareaControler extends Controller
      * @param  \App\Models\Tarea  $tarea
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tarea $tarea)
+    public function update(TareaRequest $request, Tarea $tarea)
     {
-        //
+       $datos=$request->validated();
+       $tarea->update($datos);
+       return redirect(route('tarea.index'));
     }
 
     /**
@@ -95,6 +92,7 @@ class TareaControler extends Controller
      */
     public function destroy(Tarea $tarea)
     {
-        //
+        $tarea->delete();
+        return redirect()->route('tarea.index');
     }
 }

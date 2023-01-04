@@ -1,9 +1,10 @@
 @extends('tema.app')
-@section('title', 'Nueva Tarea')
+@section('title', 'Editar Tarea')
 @section('contenido')
-    <h3>Registrar Tarea</h3>
-    <form action="{{route('tarea.store')}}" method="POST">
-       <x-tarea-form-body/>
+    <h3>Editar Tarea <i>{{$tarea->nombre}}</i></h3>
+    <form action="{{route('tarea.update',$tarea)}}" method="POST">
+        @method('put');
+       <x-tarea-form-body :tarea="$tarea"/>
 
     </form>
     <!-- /resources/views/post/create.blade.php -->

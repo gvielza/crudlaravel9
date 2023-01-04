@@ -17,7 +17,7 @@ class Tarea extends Model
         'urgencia',
     ];
     protected $dates=['fecha_limite'];
-    public const URGENCIAS = ['Baja', 'Normal' . 'Alta'];
+    public const URGENCIAS = ['Baja', 'Normal' , 'Alta'];
 
     public function urgencia()
     {
