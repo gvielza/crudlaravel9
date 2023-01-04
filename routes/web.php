@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TareaControler;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('tarea/registrar',[TareaControler::class,'create'])->name('tarea.create');
+
+Route::post('tarea/guardar', [TareaControler::class,'store'])->name('tarea.store');
+Route::get('tarea/listar', [TareaControler::class,'index'])->name('tarea.index');
